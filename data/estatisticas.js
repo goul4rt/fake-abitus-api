@@ -1,6 +1,6 @@
 const estatisticas = {
   "quantPessoasDesaparecidas": 100,
-  "quantPessoasEncontradas": 29
+  "quantPessoasEncontradas": 23
 };
 
 module.exports = estatisticas;

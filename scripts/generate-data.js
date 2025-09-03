@@ -103,18 +103,13 @@ function gerarPessoa(id) {
   
   const informacao = faker.helpers.arrayElement(informacoesDesaparecimento);
   
-  // Gerar URLs de imagens realistas do Unsplash
-  const genero = sexo === 'MASCULINO' ? 'men' : 'women';
-  const idadeFoto = idade < 18 ? 'teenager' : idade < 30 ? 'young' : idade < 50 ? 'adult' : 'elderly';
-  
-  const urlFoto = faker.image.urlLoremFlickr({
-    category: 'people',
+  // Gerar URLs de imagens realistas usando personPortrait (IA - Stable Diffusion 3)
+  const urlFoto = faker.image.personPortrait({
     width: 300,
     height: 400
   });
   
-  const urlCartaz = faker.image.urlLoremFlickr({
-    category: 'people',
+  const urlCartaz = faker.image.personPortrait({
     width: 400,
     height: 600
   });
