@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake API SEPLAG - Documentação</title>
+    <style>
+        body { font-family: Arial, sans-serif; max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .endpoint { border: 1px solid #ddd; margin: 20px 0; padding: 20px; border-radius: 5px; }
+        .method { display: inline-block; padding: 5px 10px; border-radius: 3px; color: white; font-weight: bold; }
+        .get { background-color: #61affe; }
+        .post { background-color: #49cc90; }
+        .put { background-color: #fca130; }
+        .delete { background-color: #f93e3e; }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+        th { background-color: #f2f2f2; }
+        pre { background-color: #f5f5f5; padding: 10px; border-radius: 3px; overflow-x: auto; }
+        .model { background-color: #f9f9f9; padding: 15px; margin: 10px 0; border-radius: 5px; }
+    </style>
+</head>
+<body>
+    <h1>Fake API SEPLAG - Documentação</h1>
+    <p>Documentação completa dos endpoints da API fake para estudos de concurso SEPLAG</p>
+    <p><strong>Versão:</strong> 1.0.0</p>
+    <p><strong>Base URL:</strong> <code>http://localhost:3001/v1</code></p>
+    
+    <h2>Endpoints</h2>
+    
+        <div class="endpoint">
+            <h3><span class="method get">GET</span> /pessoas/aberto/filtro</h3>
+            <p>Lista pessoas com filtros avançados e paginação</p>
+            
+                <h4>Parâmetros:</h4>
+                <table>
+                    <tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr>
+                    
+                        <tr><td>nome</td><td>string</td><td>Não</td><td>Busca por nome</td></tr>
+                    
+                        <tr><td>faixaIdadeInicial</td><td>number</td><td>Não</td><td>Idade mínima</td></tr>
+                    
+                        <tr><td>faixaIdadeFinal</td><td>number</td><td>Não</td><td>Idade máxima</td></tr>
+                    
+                        <tr><td>sexo</td><td>string</td><td>Não</td><td>MASCULINO ou FEMININO</td></tr>
+                    
+                        <tr><td>status</td><td>string</td><td>Não</td><td>ENCONTRADO ou DESAPARECIDO</td></tr>
+                    
+                        <tr><td>pagina</td><td>number</td><td>Não</td><td>Página (padrão: 0)</td></tr>
+                    
+                        <tr><td>porPagina</td><td>number</td><td>Não</td><td>Itens por página (padrão: 10)</td></tr>
+                    
+                </table>
+            
+            
+                <h4>Exemplo:</h4>
+                <pre>GET http://localhost:3001/v1/pessoas/aberto/filtro?sexo=FEMININO&faixaIdadeInicial=18&faixaIdadeFinal=30&pagina=0&porPagina=5</pre>
+                
+                    <h4>Resposta:</h4>
+                    <pre>{
+  "content": "Array de pessoas",
+  "totalPages": "Número total de páginas",
+  "totalElements": "Total de elementos",
+  "size": "Tamanho da página",
+  "number": "Número da página atual"
+}</pre>
+                
+            
+        </div>
+    
+        <div class="endpoint">
+            <h3><span class="method get">GET</span> /pessoas/aberto/dinamico</h3>
+            <p>Retorna pessoas aleatórias para exibição dinâmica</p>
+            
+                <h4>Parâmetros:</h4>
+                <table>
+                    <tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr>
+                    
+                        <tr><td>registros</td><td>number</td><td>Não</td><td>Quantidade de registros (padrão: 5)</td></tr>
+                    
+                </table>
+            
+            
+                <h4>Exemplo:</h4>
+                <pre>GET http://localhost:3001/v1/pessoas/aberto/dinamico?registros=3</pre>
+                
+                    <h4>Resposta:</h4>
+                    <pre>"Array de pessoas aleatórias"</pre>
+                
+            
+        </div>
+    
+        <div class="endpoint">
+            <h3><span class="method get">GET</span> /pessoas/aberto/estatistico</h3>
+            <p>Estatísticas gerais do sistema</p>
+            
+            
+                <h4>Exemplo:</h4>
+                <pre>GET http://localhost:3001/v1/pessoas/aberto/estatistico</pre>
+                
+                    <h4>Resposta:</h4>
+                    <pre>{
+  "quantPessoasDesaparecidas": "Número de pessoas desaparecidas",
+  "quantPessoasEncontradas": "Número de pessoas encontradas",
+  "totalRegistros": "Total de registros",
+  "percentualEncontrados": "Percentual de pessoas encontradas"
+}</pre>
+                
+            
+        </div>
+    
+        <div class="endpoint">
+            <h3><span class="method get">GET</span> /pessoas/:id</h3>
+            <p>Detalhes completos de uma pessoa específica</p>
+            
+                <h4>Parâmetros:</h4>
+                <table>
+                    <tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr>
+                    
+                        <tr><td>id</td><td>number</td><td>Sim</td><td>ID da pessoa</td></tr>
+                    
+                </table>
+            
+            
+                <h4>Exemplo:</h4>
+                <pre>GET http://localhost:3001/v1/pessoas/1</pre>
+                
+                    <h4>Resposta:</h4>
+                    <pre>"Objeto com detalhes completos da pessoa"</pre>
+                
+            
+        </div>
+    
+        <div class="endpoint">
+            <h3><span class="method post">POST</span> /ocorrencias/informacoes-desaparecido</h3>
+            <p>Envia informações sobre um desaparecido</p>
+            
+                <h4>Parâmetros:</h4>
+                <table>
+                    <tr><th>Nome</th><th>Tipo</th><th>Obrigatório</th><th>Descrição</th></tr>
+                    
+                        <tr><td>ocoId</td><td>string|number</td><td>Sim</td><td>ID da ocorrência</td></tr>
+                    
+                        <tr><td>informacao</td><td>string</td><td>Sim</td><td>Informação sobre o desaparecido</td></tr>
+                    
+                        <tr><td>descricao</td><td>string</td><td>Sim</td><td>Descrição detalhada</td></tr>
+                    
+                        <tr><td>data</td><td>string</td><td>Sim</td><td>Data da informação (YYYY-MM-DD)</td></tr>
+                    
+                        <tr><td>files</td><td>File[]</td><td>Não</td><td>Arquivos anexados (máx: 5)</td></tr>
+                    
+                </table>
+            
+            
+                <h4>Exemplo:</h4>
+                <pre>POST http://localhost:3001/v1/ocorrencias/informacoes-desaparecido</pre>
+                
+            
+        </div>
+    
+    
+    <h2>Modelos de Dados</h2>
+    
+        <div class="model">
+            <h3>pessoa</h3>
+            <pre>{
+  "id": "number",
+  "nome": "string",
+  "idade": "number",
+  "sexo": "MASCULINO|FEMININO",
+  "urlFoto": "string (URL)",
+  "ultimaOcorrencia": {
+    "ocoId": "number",
+    "dtDesaparecimento": "string (ISO date)",
+    "dataLocalizacao": "string (ISO date) | undefined",
+    "localDesaparecimentoConcat": "string",
+    "encontradoVivo": "boolean",
+    "ocorrenciaEntrevDesapDTO": {
+      "vestimentasDesaparecido": "string",
+      "informacao": "string"
+    },
+    "listaCartaz": [
+      {
+        "tipoCartaz": "string",
+        "urlCartaz": "string (URL)"
+      }
+    ]
+  },
+  "vivo": "boolean"
+}</pre>
+        </div>
+    
+        <div class="model">
+            <h3>respostaPaginada</h3>
+            <pre>{
+  "content": "Array",
+  "totalPages": "number",
+  "totalElements": "number",
+  "size": "number",
+  "number": "number"
+}</pre>
+        </div>
+    
+        <div class="model">
+            <h3>estatisticas</h3>
+            <pre>{
+  "quantPessoasDesaparecidas": "number",
+  "quantPessoasEncontradas": "number",
+  "totalRegistros": "number",
+  "percentualEncontrados": "number"
+}</pre>
+        </div>
+    
+    
+    <h2>Códigos de Resposta</h2>
+    <table>
+        <tr><th>Código</th><th>Descrição</th></tr>
+        
+            <tr><td>200</td><td>Sucesso</td></tr>
+        
+            <tr><td>400</td><td>Parâmetros inválidos</td></tr>
+        
+            <tr><td>404</td><td>Recurso não encontrado</td></tr>
+        
+            <tr><td>500</td><td>Erro interno do servidor</td></tr>
+        
+    </table>
+</body>
+</html>

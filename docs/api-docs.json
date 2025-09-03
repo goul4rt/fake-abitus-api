@@ -1,0 +1,211 @@
+{
+  "titulo": "Fake API SEPLAG - Documentação",
+  "descricao": "Documentação completa dos endpoints da API fake para estudos de concurso SEPLAG",
+  "versao": "1.0.0",
+  "baseUrl": "http://localhost:3001/v1",
+  "endpoints": [
+    {
+      "metodo": "GET",
+      "caminho": "/pessoas/aberto/filtro",
+      "descricao": "Lista pessoas com filtros avançados e paginação",
+      "parametros": [
+        {
+          "nome": "nome",
+          "tipo": "string",
+          "obrigatorio": false,
+          "descricao": "Busca por nome"
+        },
+        {
+          "nome": "faixaIdadeInicial",
+          "tipo": "number",
+          "obrigatorio": false,
+          "descricao": "Idade mínima"
+        },
+        {
+          "nome": "faixaIdadeFinal",
+          "tipo": "number",
+          "obrigatorio": false,
+          "descricao": "Idade máxima"
+        },
+        {
+          "nome": "sexo",
+          "tipo": "string",
+          "obrigatorio": false,
+          "descricao": "MASCULINO ou FEMININO"
+        },
+        {
+          "nome": "status",
+          "tipo": "string",
+          "obrigatorio": false,
+          "descricao": "ENCONTRADO ou DESAPARECIDO"
+        },
+        {
+          "nome": "pagina",
+          "tipo": "number",
+          "obrigatorio": false,
+          "descricao": "Página (padrão: 0)"
+        },
+        {
+          "nome": "porPagina",
+          "tipo": "number",
+          "obrigatorio": false,
+          "descricao": "Itens por página (padrão: 10)"
+        }
+      ],
+      "exemplo": {
+        "url": "/pessoas/aberto/filtro?sexo=FEMININO&faixaIdadeInicial=18&faixaIdadeFinal=30&pagina=0&porPagina=5",
+        "resposta": {
+          "content": "Array de pessoas",
+          "totalPages": "Número total de páginas",
+          "totalElements": "Total de elementos",
+          "size": "Tamanho da página",
+          "number": "Número da página atual"
+        }
+      }
+    },
+    {
+      "metodo": "GET",
+      "caminho": "/pessoas/aberto/dinamico",
+      "descricao": "Retorna pessoas aleatórias para exibição dinâmica",
+      "parametros": [
+        {
+          "nome": "registros",
+          "tipo": "number",
+          "obrigatorio": false,
+          "descricao": "Quantidade de registros (padrão: 5)"
+        }
+      ],
+      "exemplo": {
+        "url": "/pessoas/aberto/dinamico?registros=3",
+        "resposta": "Array de pessoas aleatórias"
+      }
+    },
+    {
+      "metodo": "GET",
+      "caminho": "/pessoas/aberto/estatistico",
+      "descricao": "Estatísticas gerais do sistema",
+      "parametros": [],
+      "exemplo": {
+        "url": "/pessoas/aberto/estatistico",
+        "resposta": {
+          "quantPessoasDesaparecidas": "Número de pessoas desaparecidas",
+          "quantPessoasEncontradas": "Número de pessoas encontradas",
+          "totalRegistros": "Total de registros",
+          "percentualEncontrados": "Percentual de pessoas encontradas"
+        }
+      }
+    },
+    {
+      "metodo": "GET",
+      "caminho": "/pessoas/:id",
+      "descricao": "Detalhes completos de uma pessoa específica",
+      "parametros": [
+        {
+          "nome": "id",
+          "tipo": "number",
+          "obrigatorio": true,
+          "descricao": "ID da pessoa"
+        }
+      ],
+      "exemplo": {
+        "url": "/pessoas/1",
+        "resposta": "Objeto com detalhes completos da pessoa"
+      }
+    },
+    {
+      "metodo": "POST",
+      "caminho": "/ocorrencias/informacoes-desaparecido",
+      "descricao": "Envia informações sobre um desaparecido",
+      "parametros": [
+        {
+          "nome": "ocoId",
+          "tipo": "string|number",
+          "obrigatorio": true,
+          "descricao": "ID da ocorrência"
+        },
+        {
+          "nome": "informacao",
+          "tipo": "string",
+          "obrigatorio": true,
+          "descricao": "Informação sobre o desaparecido"
+        },
+        {
+          "nome": "descricao",
+          "tipo": "string",
+          "obrigatorio": true,
+          "descricao": "Descrição detalhada"
+        },
+        {
+          "nome": "data",
+          "tipo": "string",
+          "obrigatorio": true,
+          "descricao": "Data da informação (YYYY-MM-DD)"
+        },
+        {
+          "nome": "files",
+          "tipo": "File[]",
+          "obrigatorio": false,
+          "descricao": "Arquivos anexados (máx: 5)"
+        }
+      ],
+      "exemplo": {
+        "url": "/ocorrencias/informacoes-desaparecido",
+        "metodo": "POST",
+        "contentType": "multipart/form-data",
+        "body": {
+          "ocoId": "1001",
+          "informacao": "Vi a pessoa no shopping",
+          "descricao": "Ela estava vestindo uma camisa azul",
+          "data": "2024-03-25",
+          "files": "[arquivo1.jpg, arquivo2.pdf]"
+        }
+      }
+    }
+  ],
+  "modelos": {
+    "pessoa": {
+      "id": "number",
+      "nome": "string",
+      "idade": "number",
+      "sexo": "MASCULINO|FEMININO",
+      "urlFoto": "string (URL)",
+      "ultimaOcorrencia": {
+        "ocoId": "number",
+        "dtDesaparecimento": "string (ISO date)",
+        "dataLocalizacao": "string (ISO date) | undefined",
+        "localDesaparecimentoConcat": "string",
+        "encontradoVivo": "boolean",
+        "ocorrenciaEntrevDesapDTO": {
+          "vestimentasDesaparecido": "string",
+          "informacao": "string"
+        },
+        "listaCartaz": [
+          {
+            "tipoCartaz": "string",
+            "urlCartaz": "string (URL)"
+          }
+        ]
+      },
+      "vivo": "boolean"
+    },
+    "respostaPaginada": {
+      "content": "Array",
+      "totalPages": "number",
+      "totalElements": "number",
+      "size": "number",
+      "number": "number"
+    },
+    "estatisticas": {
+      "quantPessoasDesaparecidas": "number",
+      "quantPessoasEncontradas": "number",
+      "totalRegistros": "number",
+      "percentualEncontrados": "number"
+    }
+  },
+  "codigosResposta": {
+    "200": "Sucesso",
+    "400": "Parâmetros inválidos",
+    "404": "Recurso não encontrado",
+    "500": "Erro interno do servidor"
+  }
+}
